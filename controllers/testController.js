@@ -31,7 +31,7 @@ const insertTestData = async (req, res) => {
             },
 
         ])
-        
+
         res.status(200).json({
             message: 'Inserted test data successfully',
             user,
@@ -43,4 +43,27 @@ const insertTestData = async (req, res) => {
     }
 };
 
-module.exports = { insertTestData }
+const getAllUsers = async (req, res) => {
+    try{
+        const users = await User.find().select('-__v');
+        res.status(200).json(users)
+    }catch(error){
+        res.status(500).json({ message: 'Failed to fetch users' })
+    }
+};
+
+
+const getAllTasks = async (req, res) => {
+    try{
+        const tasks = await Task.find().populate('user', 'name email').select('-__V');
+        res.status(200).json(tasks);
+    }catch(error){
+        res.status(500).json({message: 'Failed to fetch tasks'})
+    }
+};
+
+module.exports = { 
+    insertTestData,
+    getAllUsers,
+    getAllTasks,
+};
