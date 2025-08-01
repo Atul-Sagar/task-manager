@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Task = require('../models/Task');
 
+
 const insertTestData = async (req, res) => {
     try{
         await User.deleteMany();
